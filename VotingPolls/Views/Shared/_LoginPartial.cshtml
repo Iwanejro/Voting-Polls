@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@*<ul class="navbar-nav">*@
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.FindByNameAsync(User.Identity?.Name);
+    @*<div class="nav-item">*@
+    <div class="col-auto">
+        <div class="row">
+            <div class="col-auto align-self-end">
+                <a  class="nav-link text-light fw-bold" href="" title="Manage">Hello @currentUser.Firstname @currentUser.Lastname!</a> @*asp-area="Identity" asp-page="/Account/Manage/Index"*@
+            </div>
+            <div class="col-auto align-self-end">
+                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button  type="submit" class="nav-link btn btn-link text-light fw-bold">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+}
+else
+{
+    <div class="col-auto">
+        <div class="row">
+            <div class="col-auto align-self-end">
+                <a class="nav-link mt-1" asp-area="Identity" asp-page="/Account/Register"><h5 class="text-light fw-bold">Register</h5></a>
+            </div>
+            <div class="col-auto align-self-end">
+                <a class="nav-link mt-1" asp-area="Identity" asp-page="/Account/Login"><h5 class="text-light fw-bold">Login</h5></a>
+            </div>
+        </div>
+    </div>
+}
+@*</ul>*@

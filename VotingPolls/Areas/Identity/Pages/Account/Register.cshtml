@@ -1,0 +1,44 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="col-6 container text-light custom-bg-gray-dark p-4 box-shadow-light-outset">
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <h2>Register a new account</h2>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Firstname" class="form-control text-light bg-transparent border-light" placeholder="First Name"/>
+            <label asp-for="Input.Firstname" class="form-label">First Name</label>
+            <span asp-validation-for="Input.Firstname" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Lastname" class="form-control text-light bg-transparent border-light" placeholder="Last Name"/>
+            <label asp-for="Input.Lastname" class="form-label">Last Name</label>
+            <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control text-light bg-transparent border-light " autocomplete="username" aria-required="true" placeholder="Email"/>
+            <label asp-for="Input.Email" class="form-label">Email</label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Password" class="form-control text-light bg-transparent border-light " autocomplete="new-password" aria-required="true" placeholder="Password"/>
+            <label asp-for="Input.Password" class="form-label">Password</label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Input.ConfirmPassword" class="form-control text-light bg-transparent border-light " autocomplete="new-password" aria-required="true" placeholder="Confirm Password"/>
+            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-outline-dark border-light border-2 fw-bold p-2" style="color:lightgray">Register</button>
+    </form>
+</div>
+    
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

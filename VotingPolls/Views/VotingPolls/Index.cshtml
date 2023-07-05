@@ -1,0 +1,53 @@
+﻿@model IEnumerable<VotingPollListVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="container col-10 text-light">
+
+    <i class="bi bi-globe-europe-africa"></i>
+    &nbsp; <i class="bi bi-list-stars"></i>
+    &nbsp; <i class="bi bi-globe-americas"></i>
+    &nbsp; All polls in the world
+    &nbsp; <i class="bi bi-globe-central-south-asia"></i>
+    &nbsp; <i class="bi bi-list-check"></i>
+    &nbsp; <i class="bi bi-globe-asia-australia"></i>
+    
+    
+
+</h2>
+<div class="container col-10 text-light">
+    <br/>
+    @foreach (var votingPoll in @Model)
+    {
+                <div class="card text-light custom-bg-gray-dark box-shadow-light-outset mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title">@votingPoll.Name</h3>
+                                <h3 class="card-subtitle fw-normal">@votingPoll.Question</h3>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="float-end">Date Created:</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="float-end">@votingPoll.DateCreated.ToString("dd.MM.yyyy")</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a asp-action="Vote" asp-route-votingPollId="@votingPoll.Id" class="btn btn-outline-dark border-light border-2 fw-bold me-1" style="color:lightgray">
+                                <i class="bi bi-star-fill"></i> &nbsp; Vote!</a>
+                            <a asp-action="Results" asp-route-votingPollId="@votingPoll.Id" class="btn btn-outline-dark border-light border-2 fw-bold me-1" style="color:lightgray">
+                                <i class="bi bi-bar-chart-fill"></i> &nbsp; Results</a>
+                        </div>
+                    </div>
+                </div>
+    }
+</div>

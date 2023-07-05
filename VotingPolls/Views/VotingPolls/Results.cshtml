@@ -1,0 +1,161 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model ResultsVM
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+
+
+<div class="container col-9 text-light custom-bg-gray-dark p-4 box-shadow-light-outset">
+    <div>
+        <h3 class="card-title">@Model.VotingPollVM.Name</h3>
+        <h3 class="card-subtitle fw-normal">@Model.VotingPollVM.Question</h3>
+    </div>
+    <br/><br/>
+    @foreach (var answer in Model.VotingPollVM.Answers)
+    {
+        string progressColor;
+        string progressStyle;
+        string progressText;
+        if (answer.Votes == null || Model.VotingPollVM.Votes.Count == 0)
+        {
+            progressColor = "bg-transparent";
+            progressStyle = null;
+            progressText = null;
+        }else
+        {
+            var progressValue = Convert.ToString(answer.Votes.Count*100/Model.VotingPollVM.Votes.Count);
+            progressColor = "bg-primary";
+            progressStyle= "width:" + progressValue + "%";
+            progressText = answer.Votes.Count*100/Model.VotingPollVM.Votes.Count + "%";
+        }
+
+        <div class="row">
+            <div class="col-10 mb-1">
+                <div class="row h-100 align-items-center">
+                    <h5 class="fw-normal">@answer.Text</h5>
+                </div>
+            </div>
+            <div class="col-2 mb-1">
+                <div class="dropdown float-end">
+                    <button class="custom-btn custom-btn-outline-gray dropdown-toggle" 
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside"
+                        aria-expanded="false">
+                    @answer.Votes.Count &nbsp; <i class="bi bi-people-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu custom-bg-dark text-light custom-box-shadow">
+                    @foreach (var vote in answer.Votes)
+                    {
+                        <li class="text-light ms-3 mb-0 mt-0">@vote.VoterDisplayName</li>
+                    }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-2">
+            <div class="col-12">
+                <div class="col-12 mb-4 progress" style="height: 1.75rem; border-radius:15px">
+                    <div class="progress-bar @progressColor fw-bold" style="@progressStyle; font-size:1rem">
+                        @progressText
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card custom-bg-dark custom-border-r15 p-3">
+        <h5 class="mb-2">Comments:</h5>
+        @if (Model.Comments != null)
+        {
+            foreach (var comment in Model.Comments)
+            {
+                <div class="row">
+                    <div class="col-11">
+                        <div class="card custom-bg-gray-dark text-light p-2 mb-2">
+                            <div class="row h-100 align-items-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="fw-bold mt-0 mb-2">@comment.Author.Firstname @comment.Author.Lastname</h6>
+                                    </div>
+                                    <div class="col pe-0">
+                                        <h6 class="fw-normal mt-0 mb-2 float-end">@comment.DateCreated.Value.ToString("HH:mm:ss, dd.MM.yyyy")</h6>
+                                    </div>
+                                </div>
+                                <h6 class="fw-normal mb-0">@comment.Text</h6>
+                            </div>
+                        </div>
+                    </div>
+                    @{ var currentUser = await UserManager.FindByNameAsync(User.Identity.Name);}
+                    @if (comment.AuthorId == currentUser.Id)
+                    {
+                        <div class="col-1 ps-0">
+                            <form asp-controller="Comments" asp-action="Delete">
+                                <div class="dropdown">
+                                    <button class="custom-btn custom-btn-outline-gray" type="button" data-bs-toggle="dropdown">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu custom-bg-dark text-light custom-box-shadow">
+                                        <li class="text-light ms-3">
+                                            <a asp-controller="Comments" asp-action="Delete">
+                                                <button asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" type="submit" class="custom-btn custom-btn-outline-gray">
+                                                    Delete
+                                                </button>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                </div>
+
+            }
+        }
+        <form asp-controller="Comments" asp-action="Create" class="col-11">
+            <textarea class="form-control text-light mb-1 custom-bg-gray-dark border-0" background-color:#343a40" asp-for="CommentText" placeholder="Write a comment..."></textarea>
+            <div class="row">
+                <span asp-validation-for="CommentText" class="text-danger"></span>
+            </div>
+            <a asp-controller="Comments" asp-action="Create" class="w-auto">
+                <button type="submit" class="custom-btn custom-btn-outline-gray mt-1 w-auto">
+                    Add Comment
+                </button>
+            <input type="hidden" asp-for="VotingPollVM.Id" />
+            </a>
+
+            
+        </form>
+        
+    </div>
+    <br/>
+
+
+    <div class="col-12">
+        <form asp-action="DeleteUserPollVotes" asp-controller="VotingPolls">
+        @if (Model.UserAlreadyVoted)
+        {
+            <a class="custom-btn custom-btn-outline-gray"  asp-action="Vote" asp-route-votingPollId="@Model.VotingPollVM.Id"><i class="bi bi-star-fill"></i> Change Vote</a>
+            
+                <a asp-action="DeleteUserPollVotes" asp-controller="VotingPolls">
+                    <button type="submit" class="custom-btn custom-btn-outline-gray ms-3"  asp-controller="VotingPolls" asp-action="DeleteUserPollVotes" asp-route-actionName="Results" asp-route-votingPollId="@Model.VotingPollVM.Id">
+                        <i class="bi bi-trash3-fill"></i>  Delete my votes
+                    </button>
+                </a>
+            
+                <a asp-controller="VotingPolls" asp-action="MyPolls" class="custom-btn custom-btn-outline-gray float-end " ><i class="bi bi-arrow-return-left"></i>  Back to List</a>
+        }else
+        {
+            <a class="custom-btn custom-btn-outline-gray"  asp-action="Vote" asp-route-votingPollId="@Model.VotingPollVM.Id" > <i class="bi bi-star-fill"></i> Vote</a>
+            <a asp-controller="VotingPolls" asp-action="MyPolls" class="custom-btn custom-btn-outline-gray float-end " ><i class="bi bi-arrow-return-left"></i>  Back to List</a>
+        }
+        </form>
+    
+    </div>
+
+    
+</div>
+
