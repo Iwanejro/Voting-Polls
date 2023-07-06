@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using VotingPolls.Extensions;
 
 namespace VotingPolls.Data
 {
@@ -17,6 +18,20 @@ namespace VotingPolls.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<VotingPollComment> VotingPollsComments { get; set; }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in base.ChangeTracker.Entries<BaseEntity>().Where(q => q.State == EntityState.Modified 
+                                                                                || q.State == EntityState.Added))
+            {
+                entry.Entity.DateModified = DateTime.Now;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.DateCreated = DateTime.Now;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,23 +54,20 @@ namespace VotingPolls.Data
                 .HasOne(e => e.VotingPoll)
                 .WithMany(e => e.Votes)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder
+                .Entity<Comment>()
+                .HasOne(e => e.VotingPoll)
+                .WithMany(e => e.Comments)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.SeedUsers();
+            builder.SeedVotingPolls();
+            builder.SeedVotingPollUsers();
+            builder.SeedAnswers();
+            builder.SeedVotes();
+            builder.SeedComments();
         }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            foreach (var entry in base.ChangeTracker.Entries<BaseEntity>().Where(q => q.State == EntityState.Modified 
-                                                                                || q.State == EntityState.Added))
-            {
-                entry.Entity.DateModified = DateTime.Now;
-
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.DateCreated = DateTime.Now;
-                }
-            }
-            return base.SaveChangesAsync(cancellationToken);
-        }
-
 
 
     }

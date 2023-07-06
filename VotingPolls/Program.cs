@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using VotingPolls.Configurations;
 using VotingPolls.Contracts;
 using VotingPolls.Data;
@@ -17,34 +16,11 @@ namespace VotingPolls
 
             // Add services to the container.
 
-            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            var databaseUri = new Uri(databaseUrl);
-            //var databaseUri = new Uri("xxx"); // for development:
-            var userInfo = databaseUri.UserInfo.Split(':');
-
-            var npgConnBuilder = new NpgsqlConnectionStringBuilder
-            {
-                Host = databaseUri.Host,
-                Port = databaseUri.Port,
-                Username = userInfo[0],
-                Password = userInfo[1],
-                Database = databaseUri.LocalPath.TrimStart('/'),
-                SslMode = SslMode.Require,
-                TrustServerCertificate = true
-            };
-
-            var connectionString = npgConnBuilder.ConnectionString;
-
-            //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(connectionString));
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString));
+                options.UseSqlServer(connectionString));
+       
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-
 
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -59,9 +35,7 @@ namespace VotingPolls
 
             builder.Services.AddAutoMapper(typeof(MapperConfig));
 
-
             builder.Services.AddControllersWithViews();
-
             
             var app = builder.Build();
 

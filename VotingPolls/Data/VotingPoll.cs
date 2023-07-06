@@ -11,6 +11,7 @@ namespace VotingPolls.Data
         public bool AdditionalAnswers { get; set; }
         public List<Answer> Answers { get; set; }
         public List<Vote>? Votes { get; set; }
+        public List<Comment>? Comments{ get; set; }
 
 
         [ForeignKey("OwnerId")]
