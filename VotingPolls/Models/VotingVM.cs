@@ -14,14 +14,12 @@ namespace VotingPolls.Models
         public VotingPollVM VotingPollVM { get; set; }
         public string VoterId { get; set; }          
         public bool UserAlreadyVoted { get; set; }
-
         
         [Display(Name = "Answer")]
         public string? NewAnswerValue { get; set; }
 
         [Required(ErrorMessage = "At least one answer is required.")]
         public List<int>? UserAnswers { get; set; }
-
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

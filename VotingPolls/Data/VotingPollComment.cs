@@ -7,13 +7,9 @@ namespace VotingPolls.Data
     {
         public int Id { get; set; }
 
-
-
         [ForeignKey("CommentId")]
         public int CommentId { get; set; }
         public Comment Comment { get; set; }
-
-
 
         [ForeignKey("VotingPollId")]
         public int VotingPollId { get; set; }

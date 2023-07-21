@@ -40,7 +40,6 @@
             <i class="bi bi-star-fill"></i>  @buttonValue
         </button>
 
-
         @if (Model.UserAlreadyVoted)
         {
             <a class="custom-btn custom-btn-outline-gray ms-3" asp-action="Results" asp-route-votingPollId="@Model.VotingPollVM.Id"><i class="bi bi-bar-chart-fill"></i>  Results</a>

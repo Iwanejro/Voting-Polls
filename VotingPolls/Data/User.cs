@@ -6,6 +6,5 @@ namespace VotingPolls.Data
     {
         public string? Firstname { get; set; }
         public string? Lastname { get; set; }
-
     }
 }

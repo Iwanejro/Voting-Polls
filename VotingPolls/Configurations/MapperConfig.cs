@@ -15,10 +15,7 @@ namespace VotingPolls.Configurations
             CreateMap<VotingPoll, VotingVM>().ReverseMap();
             CreateMap<VotingPoll, VotingPollVM>().ReverseMap();
             CreateMap<Answer, AnswerVM>().ReverseMap();
-            //CreateMap<List<Answer>, List<AnswerVM>>().ReverseMap();
             CreateMap<Vote, VoteVM>().ReverseMap();
-            //CreateMap<List<Vote>, List<VoteVM>>().ReverseMap();
-
         }
     }
 }

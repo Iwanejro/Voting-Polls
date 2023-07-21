@@ -8,8 +8,6 @@ namespace VotingPolls.Models
         public int Id { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
-
-
         
         [Display(Name = "Answer text")]
         [Required(ErrorMessage = "Answer can't be empty!")]

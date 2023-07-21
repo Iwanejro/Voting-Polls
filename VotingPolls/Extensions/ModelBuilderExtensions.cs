@@ -24,7 +24,6 @@ namespace VotingPolls.Extensions
                     Firstname = "Budapest",
                     Lastname = "Pumpkinpatch"
                 },
-
                 new User
                 {
                     Id = "d797574c-6e0a-483e-a639-73f3203c9f85",
@@ -38,7 +37,6 @@ namespace VotingPolls.Extensions
                     Firstname = "Beezlebub",
                     Lastname = "Wafflesmack"
                 },
-
                 new User
                 {
                     Id = "f351991b-d3d7-4abd-a4c5-36337b91fbfd",
@@ -52,7 +50,6 @@ namespace VotingPolls.Extensions
                     Firstname = "Buckingham",
                     Lastname = "Ampersand"
                 },
-
                 new User
                 {
                     Id = "cb994c3c-a4d5-4540-af5a-dffea8451899",
@@ -66,7 +63,6 @@ namespace VotingPolls.Extensions
                     Firstname = "Butternut",
                     Lastname = "Crinkle-Fries"
                 },
-
                 new User
                 {
                     Id = "c7fe7a3f-a42f-4514-ab2a-8c47a53a09cc",
@@ -97,7 +93,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new VotingPoll
                 {
                     Id = 2,
@@ -109,7 +104,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new VotingPoll
                 {
                     Id = 3,
@@ -121,7 +115,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new VotingPoll
                 {
                     Id = 4,
@@ -133,7 +126,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new VotingPoll
                 {
                     Id = 5,
@@ -181,7 +173,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Answer
                 {
                     Id = 4,
@@ -212,7 +203,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Answer
                 {
                     Id = 7,
@@ -233,7 +223,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Answer
                 {
                     Id = 9,
@@ -254,7 +243,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Answer
                 {
                     Id = 11,
@@ -326,7 +314,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Vote
                 {
                     Id = 6,
@@ -363,7 +350,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Vote
                 {
                     Id = 10,
@@ -400,7 +386,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Vote
                 {
                     Id = 14,
@@ -437,7 +422,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Vote
                 {
                     Id = 18,
@@ -504,7 +488,6 @@ namespace VotingPolls.Extensions
                     UserId = "1de47819-99ec-4882-800a-5277c4a58df4",
                     VotingPollId = 5
                 },
-
                 new VotingPollUser
                 {
                     Id = 5,
@@ -529,7 +512,6 @@ namespace VotingPolls.Extensions
                     UserId = "d797574c-6e0a-483e-a639-73f3203c9f85",
                     VotingPollId = 5
                 },
-
                 new VotingPollUser
                 {
                     Id = 9,
@@ -554,7 +536,6 @@ namespace VotingPolls.Extensions
                     UserId = "f351991b-d3d7-4abd-a4c5-36337b91fbfd",
                     VotingPollId = 5
                 },
-
                 new VotingPollUser
                 {
                     Id = 13,
@@ -579,7 +560,6 @@ namespace VotingPolls.Extensions
                     UserId = "cb994c3c-a4d5-4540-af5a-dffea8451899",
                     VotingPollId = 5
                 },
-
                 new VotingPollUser
                 {
                     Id = 17,
@@ -619,7 +599,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Comment
                 {
                     Id = 2,
@@ -629,7 +608,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Comment
                 {
                     Id = 3,
@@ -639,7 +617,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now.AddMinutes(5),
                     DateModified = DateTime.Now.AddMinutes(5)
                 },
-
                 new Comment
                 {
                     Id = 4,
@@ -649,7 +626,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Comment
                 {
                     Id = 5,
@@ -659,7 +635,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 },
-
                 new Comment
                 {
                     Id = 6,
@@ -669,7 +644,6 @@ namespace VotingPolls.Extensions
                     DateCreated = DateTime.Now.AddMinutes(5),
                     DateModified = DateTime.Now.AddMinutes(5)
                 },
-
                 new Comment
                 {
                     Id = 7,

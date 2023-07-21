@@ -14,7 +14,5 @@ namespace VotingPolls.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
-
-
     }
 }

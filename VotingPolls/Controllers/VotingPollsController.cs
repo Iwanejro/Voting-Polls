@@ -54,8 +54,6 @@ namespace VotingPolls.Controllers
             this._userManager = userManager;
         }
 
-
-        // GET: VotingPolls
         public async Task<IActionResult> Index()
         {
             TempData.Clear();
@@ -63,8 +61,6 @@ namespace VotingPolls.Controllers
             _context.ChangeTracker.Clear();
             return View(model);
         }
-
-
 
         [Authorize]
         public async Task<IActionResult> MyPolls()
@@ -90,8 +86,6 @@ namespace VotingPolls.Controllers
             return View(model);
         }
 
-
-            // GET: VotingPolls/Details/5
             public async Task<IActionResult> Vote(int votingPollId)
             {
                 var model = await _voteRepository.GetVotingDetails(votingPollId);
@@ -99,7 +93,6 @@ namespace VotingPolls.Controllers
 
                 return View(model);
             }
-
         
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -168,8 +161,6 @@ namespace VotingPolls.Controllers
             return RedirectToAction(actionName, new { votingPollId = votingPollId });
         }
 
-
-        // GET: VotingPolls/Create
         public async Task<IActionResult> Create()
         {
             
@@ -185,10 +176,6 @@ namespace VotingPolls.Controllers
             } 
         }
 
-
-        // POST: VotingPolls/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VotingPollCreateVM votingPollCreateVM)
@@ -202,7 +189,6 @@ namespace VotingPolls.Controllers
 
             return View(votingPollCreateVM);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -231,14 +217,12 @@ namespace VotingPolls.Controllers
             return View(model);
         }
 
-
-        // GET: VotingPolls/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int votingPollId)
         {
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            if (!_context.VotingPolls.Any(q => q.Id == votingPollId && q.OwnerId == currentUser.Id))
+            if(!(await CheckIfActiveUserIsAuthorizedToManagePoll(votingPollId)))
             {
                 return RedirectToAction("NotAuthorized", "Home");
             }
@@ -251,7 +235,7 @@ namespace VotingPolls.Controllers
                 model.CurrentUserId = currentUser.Id;
                 return View(model);
             }
-            else // getting temp data to refill the input fields after add answer/remove answer actions
+            else // getting temp data to refill the input fields after AddAnswer / RemoveAnswer actions
             {
                 var model = TempData.Get<VotingPollEditVM>(nameof(VotingPollCreateVM));
                 model.CurrentUserId = currentUser.Id;
@@ -267,10 +251,6 @@ namespace VotingPolls.Controllers
             
         }
 
-
-        // POST: VotingPolls/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -296,14 +276,10 @@ namespace VotingPolls.Controllers
             return View(votingPollEditVM);
         }
 
-
-        // GET: VotingPolls/Delete/5
         [Authorize]
         public async Task<IActionResult> Delete(int votingPollId)
         {
-            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            if (!_context.VotingPolls.Any(q => q.Id == votingPollId && q.OwnerId == currentUser.Id))
+            if (!(await CheckIfActiveUserIsAuthorizedToManagePoll(votingPollId)))
             {
                 return RedirectToAction("NotAuthorized", "Home");
             }
@@ -312,7 +288,6 @@ namespace VotingPolls.Controllers
             return View(model);
         }
 
-        // POST: VotingPolls/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -322,8 +297,11 @@ namespace VotingPolls.Controllers
             return RedirectToAction(nameof(MyPolls));
         }
 
-        
+        public async Task<bool> CheckIfActiveUserIsAuthorizedToManagePoll(int votingPollId)
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
-
+            return _context.VotingPolls.Any(q => q.Id == votingPollId && q.OwnerId == currentUser.Id);
+        }
     }
 }

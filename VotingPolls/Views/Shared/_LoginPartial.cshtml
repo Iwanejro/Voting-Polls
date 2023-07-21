@@ -2,15 +2,13 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@*<ul class="navbar-nav">*@
 @if (SignInManager.IsSignedIn(User))
 {
     var currentUser = await UserManager.FindByNameAsync(User.Identity?.Name);
-    @*<div class="nav-item">*@
     <div class="col-auto">
         <div class="row">
             <div class="col-auto align-self-end">
-                <a  class="nav-link text-light fw-bold" href="" title="Manage">Hello @currentUser.Firstname @currentUser.Lastname!</a> @*asp-area="Identity" asp-page="/Account/Manage/Index"*@
+                <a  class="nav-link text-light fw-bold" href="" title="Manage">Hello @currentUser.Firstname @currentUser.Lastname!</a>
             </div>
             <div class="col-auto align-self-end">
                 <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -19,7 +17,6 @@
             </div>
         </div>
     </div>
-    @*</div>*@
 }
 else
 {
@@ -34,4 +31,3 @@ else
         </div>
     </div>
 }
-@*</ul>*@

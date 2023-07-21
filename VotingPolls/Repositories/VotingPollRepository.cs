@@ -38,9 +38,7 @@ namespace VotingPolls.Repositories
             if (votingPollId == null)
                 return null;
 
-
             var votingPoll = await _context.VotingPolls.FirstAsync(v => v.Id == votingPollId);
-
 
             votingPoll.Answers = await _context.Answers.Where(q => q.VotingPollId == votingPollId).ToListAsync();
             votingPoll.Votes = await _context.Votes.Where(q => q.VotingPollId == votingPollId).ToListAsync();
@@ -64,7 +62,6 @@ namespace VotingPolls.Repositories
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
         }
-
 
         public async Task<List<VotingPoll>> GetUserPollsAsync()
         {
@@ -170,7 +167,6 @@ namespace VotingPolls.Repositories
                     comment.Author = await _userManager.FindByIdAsync(comment.AuthorId);
                 }
             }
-            
 
             model.UserAlreadyVoted = model.VotingPollVM.Votes.Any(v => v.VoterId == currentUser.Id) ? true : false;
             model.VotingPollVM.Answers = model.VotingPollVM.Answers.OrderByDescending(a => a.Votes.Count).ToList();

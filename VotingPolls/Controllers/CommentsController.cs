@@ -32,10 +32,6 @@ namespace VotingPolls.Controllers
             this._userManager = userManager;
         }
 
-
-        // POST: Comments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(ResultsVM model)
@@ -56,13 +52,10 @@ namespace VotingPolls.Controllers
             return View("../../Views/VotingPolls/Results", modelWithError);
         }
 
-
-        // POST: Comments/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int commentId)
         {
-
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
             var votingPollId = (await _commentRepository.GetAsync(commentId)).VotingPollId;
 
