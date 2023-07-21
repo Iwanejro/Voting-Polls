@@ -28,6 +28,9 @@ You can try it out here: [Voting Polls](https://votingpolls.herokuapp.com/)
 * Leave comments under the poll results
 
 ## Sample Database
-If you want to run this project on your machine I strongly recommend seting up the sample database. The template is configured to use SQL Server by default. Using Entity Framework Core you can simply fill the database with dummy data by apllying the latest migrations.
+If you want to run this project on your machine, the app will apply the latest migrations on startup to set up the sample database. The template is configured to use SQL Server by default.
 
-VisualStudio in the Package Manager Console: `update-database`
+Use the sample user credentials:
+
+* LOGIN: Benedict1@mail.com
+* PASSWORD: Pwd#123
