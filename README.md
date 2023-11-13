@@ -1,7 +1,5 @@
 # VotingPolls
-This app is a tool for creating one-question polls, voting, checking the results and commenting on them.
-
-You can try it out here: [Voting Polls](https://votingpolls.herokuapp.com/)
+This a CRUD app for creating one-question polls, voting, checking the results and commenting on them.
 
 ## Technologies
 * ASP.NET Core MVC
